@@ -4,7 +4,7 @@ import { Square } from './Components/Square'
 import { TURNS, WINNER_COMBOS } from './Constants'
 
 function App() {
-    //declaramos el tablero
+    //declaramos HOOKs useState
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem('board')
     if (boardFromStorage) return JSON.parse(boardFromStorage)//lo convierte de string
@@ -21,6 +21,7 @@ function App() {
     return winnerFromStorage ?? (null)
   }) //estado de winner//0-empate//1-winner
   
+
   const checkWinner = (boardToCheck) => {
     //revisamos todas las combinaciones ganadoras
     for (const combo of WINNER_COMBOS){
@@ -52,15 +53,15 @@ function App() {
     //no actualizamos esta posicion 
     //si ya tiene algo
     if (board[index] || winner) return
-    //actualizar tablero
-    const newBoard = [...board]
-    newBoard[index] = turn
-    setBoard(newBoard)
-    //cambiar turno
-    const newTurn = turn == TURNS.X ? TURNS.O :  TURNS.X
-    setTurn(newTurn) 
-    //revisar si hay ganador
-    const newWinner = checkWinner(newBoard)
+      //actualizar tablero
+      const newBoard = [...board]
+      newBoard[index] = turn
+      setBoard(newBoard)
+      //cambiar turno
+      const newTurn = turn == TURNS.X ? TURNS.O :  TURNS.X
+      setTurn(newTurn) 
+      //revisar si hay ganador
+      const newWinner = checkWinner(newBoard)
     if (newWinner){
       setWinner(newWinner)
     }else if (checkEndGame(newBoard)){
